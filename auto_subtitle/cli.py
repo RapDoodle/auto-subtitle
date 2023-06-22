@@ -53,7 +53,7 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     # Default output_srt to True if output_video is False
-    if not output_video and not output_srt:
+    if not output_video and not output_srt and not output_audio:
         output_srt = True
 
     # Process wildcards
@@ -80,6 +80,9 @@ def main():
 
     # Extract audio from video. Skip if it is already an audio file
     audios = get_audio(paths, output_audio, output_dir, extract_wokers)
+
+    if output_audio and not output_srt and not output_video:
+        return
 
     # Generate subtitles with whisper
     subtitles = get_subtitles(
